@@ -1,10 +1,10 @@
 # github-tag-action
 
-A Github Action to automatically bump and tag master, on merge, with the latest SemVer formatted version.
+A GitHub Action to automatically bump and tag main, on merge, with the latest SemVer formatted version.
 
-[![Build Status](https://github.com/anothrNick/github-tag-action/workflows/Bump%20version/badge.svg)](https://github.com/anothrNick/github-tag-action/workflows/Bump%20version/badge.svg)
-[![Stable Version](https://img.shields.io/github/v/tag/anothrNick/github-tag-action)](https://img.shields.io/github/v/tag/anothrNick/github-tag-action)
-[![Latest Release](https://img.shields.io/github/v/release/anothrNick/github-tag-action?color=%233D9970)](https://img.shields.io/github/v/release/anothrNick/github-tag-action?color=%233D9970)
+[![Build Status](https://github.com/moble/github-tag-action/workflows/Bump%20version/badge.svg)](https://github.com/moble/github-tag-action/workflows/Bump%20version/badge.svg)
+[![Stable Version](https://img.shields.io/github/v/tag/moble/github-tag-action)](https://img.shields.io/github/v/tag/moble/github-tag-action)
+[![Latest Release](https://img.shields.io/github/v/release/moble/github-tag-action?color=%233D9970)](https://img.shields.io/github/v/release/moble/github-tag-action?color=%233D9970)
 
 > Medium Post: [Creating A Github Action to Tag Commits](https://itnext.io/creating-a-github-action-to-tag-commits-2722f1560dec)
 
@@ -17,7 +17,7 @@ name: Bump version
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
       with:
         fetch-depth: '0'
     - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.26.0
+      uses: moble/github-tag-action@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
@@ -41,7 +41,7 @@ _NOTE: set the fetch-depth for `actions/checkout@v2` to be sure you retrieve all
 * **GITHUB_TOKEN** ***(required)*** - Required for permission to tag the repo.
 * **DEFAULT_BUMP** *(optional)* - Which type of bump to use when none explicitly provided (default: `minor`).
 * **WITH_V** *(optional)* - Tag version with `v` character.
-* **RELEASE_BRANCHES** *(optional)* - Comma separated list of branches (bash reg exp accepted) that will generate the release tags. Other branches and pull-requests generate versions postfixed with the commit hash and do not generate any tag. Examples: `master` or `.*` or `release.*,hotfix.*,master` ...
+* **RELEASE_BRANCHES** *(optional)* - Comma separated list of branches (bash reg exp accepted) that will generate the release tags. Other branches and pull-requests generate versions postfixed with the commit hash and do not generate any tag. Examples: `main` or `.*` or `release.*,hotfix.*,main` ...
 * **CUSTOM_TAG** *(optional)* - Set a custom tag, useful when generating tag based on f.ex FROM image in a docker image. **Setting this tag will invalidate any other settings set!**
 * **SOURCE** *(optional)* - Operate on a relative path under $GITHUB_WORKSPACE.
 * **DRY_RUN** *(optional)* - Determine the next version without tagging the branch. The workflow can use the outputs `new_tag` and `tag` in subsequent steps. Possible values are ```true``` and ```false``` (default).
@@ -53,10 +53,10 @@ _NOTE: set the fetch-depth for `actions/checkout@v2` to be sure you retrieve all
 #### Outputs
 
 * **new_tag** - The value of the newly created tag.
-* **tag** - The value of the latest tag after running this action.
+* **tag** - The value of the latest tag before running this action.
 * **part** - The part of version which was bumped.
 
-> ***Note:*** This action creates a [lightweight tag](https://developer.github.com/v3/git/refs/#create-a-reference).
+> ***Note:*** This action creates an [annotated tag](https://developer.github.com/v3/git/refs/#create-a-reference).
 
 ### Bumping
 
@@ -71,7 +71,7 @@ If `#none` is contained in the commit message, it will skip bumping regardless `
 
 * Add this action to your repo
 * Commit some changes
-* Either push to master or open a PR
+* Either push to main or open a PR
 * On push (or merge), the action will:
   * Get latest tag
   * Bump tag with minor version unless any commit message contains `#major` or `#patch`
@@ -82,13 +82,4 @@ If `#none` is contained in the commit message, it will skip bumping regardless `
 ### Credits
 
 [fsaintjacques/semver-tool](https://github.com/fsaintjacques/semver-tool)
-
-### Projects using github-tag-action
-
-A list of projects using github-tag-action for reference.
-
-* another/github-tag-action (uses itself to create tags)
-
-* [anothrNick/json-tree-service](https://github.com/anothrNick/json-tree-service)
-
-  > Access JSON structure with HTTP path parameters as keys/indices to the JSON.
+[anothrNick/github-tag-action](https://github.com/anothrNick/github-tag-action)
